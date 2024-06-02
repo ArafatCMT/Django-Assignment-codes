@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Show Task</title>
+{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="row d-flex flex-wrap justify-content-center">
+        {% for task in form %}
+        <div class="col-sm-3">
+            <div class="card m-4">
+              <div class="card-body">
+                <p class="card-title"><b>Task Id:</b> {{task.id}}</p>
+                <p class="card-text"><b>Task Assign Date:</b> {{task.task_assign_date}}</p>
+                <h5 class="card-title"><b>Task Title:</b> {{task.taskTitle}}</h5>
+                <p class="card-text"><b>Description:</b> {{task.taskDescription}}</p>
+                <p>
+                    <b>Category:</b> {% for ct in task.category.all %}
+                    <button class="btn btn-warning btn-sm text-dark m-1" disabled>{{ct}}</button>
+                    {% endfor %}
+                </p>
+                <p>
+                    {% if task.is_completed is False %}
+                    <p style="text-align: center;">
+                        <a href="{% url 'edit_task' task.id %}" class="btn btn-primary m-2">Edit</a>
+                        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                    </p>
+                    {% else %}
+                    <p style="text-align: center;"><a href="" class="btn btn-success">Completed</a></p>
+                    {% endif %}
+                </p>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock %}
