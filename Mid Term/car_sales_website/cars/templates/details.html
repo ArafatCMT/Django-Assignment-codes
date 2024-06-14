@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>Car Gallory</title>
+{% endblock %}
+
+ {% block body %}
+<div class="row" style="width: 80%; margin: auto">
+  <div class="col-lg-6 col-md-12 col-sm-12 m-auto pt-5">
+    <img src="{{car.image.url}}" alt="" style="width: 90%" />
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12 m-auto pt-5">
+    <h4 class="card-title"><b>Car Model: {{car.model_name}}</b></h4>
+    <hr />
+    <h5><b>Price: {{car.price}}</b></h5>
+    <hr />
+    <h5><b>Brand: {{car.brand.name}}</b></h5>
+    <hr />
+    <h5><b>Quentity : {{car.quentity}} Pieces</b></h5>
+    <hr />
+    <p><b>Description:</b> {{car.description}}</p>
+    <hr />
+    {% if user.is_authenticated %}
+    {% if car.quentity > 0 %}
+    <p class="text-center">
+      <a href="{% url 'update' car.id %}" class="btn btn-outline-secondary btn-lg" style="width: 90%;"><i class="fa-solid fa-cart-shopping"></i>  Buy Now</a>
+    </p>
+    {% else %}
+    <p class="text-center">
+      <button class="btn btn-outline-secondary btn-lg" disabled style="width: 90%;"><i class="fa-solid fa-cart-shopping"></i>  Buy Now</button>
+    </p>
+    {% endif %}
+    {% endif %}
+  </div>
+</div>
+<div class="text-secondary" style="width: 80%; margin: auto">
+  <hr />
+</div>
+
+<div style="width: 80%; margin: auto" class="mt-5">
+  <div class="card p-3">
+    <h4>Total Comments : {{comments | length}}</h4>
+    {% for cmnt in comments %}
+    <hr />
+    <div class="card-body">
+      <p><b>{{cmnt.name}}</b> {{cmnt.created_on}}</p>
+      <p>{{cmnt.body}}</p>
+    </div>
+    <hr />
+    {% endfor %}
+  </div>
+</div>
+
+<div style="width: 80%; margin: auto" class="mt-5">
+  <h4>Add a new Comment...</h4>
+  <div class="card mt-3 p-3">
+    <form method="post">
+      {% csrf_token %} {{comment_form | crispy}}
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Car Gallory</title>
+{% endblock %}
+
+
+{% block body %}
+<form method='post' style="width: 50%; margin: auto;" novalidate class="mt-5">
+    <h2>Update Your Profile</h2>
+    <hr style="border-top: 1px solid black;">
+    {% csrf_token %}
+    <!-- {{form | crispy}} -->
+     {% for fm in form %}
+     {{fm.label_tag}}
+     {{fm}}
+     <h6 class="text-danger">{{fm.errors | striptags}}</h6>
+     <br>
+     {% endfor %}
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
