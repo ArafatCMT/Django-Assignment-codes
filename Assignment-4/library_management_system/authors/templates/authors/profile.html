@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Library Management System</title>
+{% endblock %}
+
+{% block body %}
+<div class="col-8 mt-5 p-4 border border-secondary rounded" style="margin: auto; ">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <h1>{{user.first_name}} {{user.last_name}}</h1>
+            <h5 class="mt-2">{{user.email}}</h5>
+            <h5 class="mt-5">Username: {{user.username}}</h5>
+        </div>
+    </div>
+</div>
+
+<h2 class="text-center mt-4">My Books</h2>
+<div class="col-8 mt-3 p-4 border border-secondary rounded" style="margin: auto; ">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Book Name</th>
+            <th scope="col">Cateory</th>
+            <th scope="col">Borrow Price</th>
+            <th scope="col">Borrowed Date</th>
+            <th scope="col">Return</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <th scope="row">{{book.title}}</th>
+                <td>{{book.category}}</td>
+                <td>{{book.borrow_price}}</td>
+                <td>{{book.borrow_date}}</td>
+                <td><a href="" class="btn btn-danger">Return</a></td>
+            </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+</div>
+{% endblock %}

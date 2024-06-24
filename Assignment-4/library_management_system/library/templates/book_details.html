@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Library Management System</title>
+{% endblock %}
+
+{% block body%}
+<div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12 text-center pt-5">
+        <img src="{{book.image.url}}" alt="" style="width: 500px; height: 700px;">
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 p-5">
+        <h2>Title: {{book.title}}</h2>
+        <hr>
+        <h5 style="line-height: 2;">Description: {{book.description}}</h5>
+        <hr>
+        <h5>Category: <button class="btn btn-success btn-lg" disabled><b>{{book.category}}</b></button></h5>
+        <hr>
+        <h5 class="text-danger">Borrow Price: {{book.borrow_price}}</h5>
+        <hr>
+        {% if user.is_authenticated %}
+        <p class="text-center">
+            <a href="{% url 'borrow_book' book.id %}" class="btn btn-outline-secondary btn-lg" style="width: 90%;">Borrow Book</a>
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- show comments -->
+<div style="width: 75%; margin: auto" class="mt-5">
+    <div class="card p-3">
+      <h4>Total Reviews : {{comments | length}}</h4>
+      {% for cmnt in comments %}
+      <hr />
+      <div class="card-body">
+        <p><b>{{cmnt.name}}</b>  {{cmnt.date}}</p>
+        <p>{{cmnt.body}}</p>
+      </div>
+      <hr />
+      {% endfor %}
+    </div>
+</div>
+
+<!-- comment form -->
+{% if user.is_authenticated %}
+
+<div style="width: 75%; margin: auto" class="mt-5">
+  <h4>Add your Review...</h4>
+  <div class="card mt-3 p-3">
+    <form method="post">
+      {% csrf_token %} 
+      {{comment_form | crispy}}
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

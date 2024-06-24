@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Library Management System</title>
+{% endblock %}
+
+{% block body %}
+<form action="" method="post" style="width: 40%; margin: auto;" novalidate class="mt-5">
+    <h1>Deposit</h1>
+    {% csrf_token %}
+    <!-- {{form | crispy}} -->
+     {% for fm in form %}
+     {{fm.label_tag}}
+     {{fm}}
+     <h6 class="text-danger">{{fm.errors | striptags }}</h6>
+     <br>
+     {% endfor %}
+     <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
